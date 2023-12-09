@@ -39,6 +39,7 @@ function Bullet:update(dt, shipX , shipY)
         fireCooldown = fireCooldown - dt
     end
 
+    self:fly()
 end
 
 function Bullet:draw()
@@ -50,7 +51,7 @@ function Bullet:draw()
     end
 end
 
-function screenCoordinates(x,y,w,h) -- offset ship graphics up-left
+function screenCoordinates(x,y,w,h) -- same as in ship... probably can make some util file for this at some point
     local newX = x - (w/2)
     local newY = y - (h/2)
     return newX, newY
@@ -60,6 +61,13 @@ function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
     return count
+end
+
+function Bullet:fly()
+    for i=1, tablelength(self.bulletArr) do
+        local bullet = self.bulletArr[i]
+        bullet.y = bullet.y - 1
+    end
 end
 
 return Bullet

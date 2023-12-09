@@ -40,8 +40,10 @@ end
 function love.update(dt)
    -- print("update")
     ship:update(dt)
-    stars:update(dt)
     local shipX, shipY = ship:shipCoordinates()
+    
+    stars:update(dt)
+    
     bullet:update(dt, shipX, shipY)
 end
 
