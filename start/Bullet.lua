@@ -1,6 +1,7 @@
 local Bullet = classes.class()
 local Model = require("Model")
 local Ship = require("Ship")
+local Utils = require("Utils")
 
 function Bullet:init(params)
     print("Bullet init!")
@@ -43,28 +44,16 @@ function Bullet:update(dt, shipX , shipY)
 end
 
 function Bullet:draw()
-    for i=1, tablelength(self.bulletArr) do
+    for i=1, Utils.tablelength(self.bulletArr) do
         local bullet = self.bulletArr[i]
 
-        local newX , newY = screenCoordinates(bullet.x, bullet.y, self.w, self.h)
+        local newX , newY = Utils.screenCoordinates(bullet.x, bullet.y, self.w, self.h)
         love.graphics.draw(self.asset, newX,newY )
     end
 end
 
-function screenCoordinates(x,y,w,h) -- same as in ship... probably can make some util file for this at some point
-    local newX = x - (w/2)
-    local newY = y - (h/2)
-    return newX, newY
-end
-
-function tablelength(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
-
 function Bullet:fly()
-    for i=1, tablelength(self.bulletArr) do
+    for i=1, Utils.tablelength(self.bulletArr) do
         if self.bulletArr[i] ~= nil then
             local bullet = self.bulletArr[i]
             bullet.y = bullet.y - 1
@@ -74,7 +63,7 @@ function Bullet:fly()
             end
         end
     end
-end
+end 
 
 function Bullet:DestoryBullet(bulletIndex)
     table.remove(self.bulletArr,bulletIndex)

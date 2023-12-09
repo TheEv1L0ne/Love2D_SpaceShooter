@@ -27,11 +27,7 @@ function Stars:update(dt)
 
     for i=1, numStars do
         local star = starsArr[i]
-        star.y = star.y + 0.5
-        if star.y > Model.stage.stageHeight then
-            star.y = 0
-        end
-
+        star.y = math.fmod(star.y + 0.5, Model.stage.stageHeight)
         starsArr[i] = star
     end
 end

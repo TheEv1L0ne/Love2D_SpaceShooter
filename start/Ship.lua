@@ -1,6 +1,7 @@
 local classes = require("classes")
 local Ship = classes.class()
 local Model = require("Model")
+local Utils = require("Utils")
 
 function Ship:init(params)
     print("Ship init!")
@@ -40,7 +41,7 @@ function Ship:update(dt)
     local x1 = self.x + (x * self.speed * dt)
     local y1 = self.y + (y * self.speed * dt)
 
-    local newX , newY = screenCoordinates(x1, y1, self.w, self.h)
+    local newX , newY = Utils.screenCoordinates(x1, y1, self.w, self.h)
     isInBoundries = Model.isInScreenBoundries(newX, newY, self.w, self.h)
 
     if isInBoundries then
@@ -50,14 +51,8 @@ function Ship:update(dt)
 end
 
 function Ship:draw()
-    local newX , newY = screenCoordinates(self.x, self.y, self.w, self.h)
+    local newX , newY = Utils.screenCoordinates(self.x, self.y, self.w, self.h)
     love.graphics.draw(self.asset, newX,newY )
-end
-
-function screenCoordinates(x,y,w,h) -- offset ship graphics up-left
-    local newX = x - (w/2)
-    local newY = y - (h/2)
-    return newX, newY
 end
 
 function Ship:shipCoordinates()

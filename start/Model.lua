@@ -27,7 +27,7 @@ Model.starsParams = {
 Model.bulletParams = 
 {
     assetName = "bullet",
-    fireRate = 1
+    fireRate = 0.2
 }
 
 Model.init = function()
