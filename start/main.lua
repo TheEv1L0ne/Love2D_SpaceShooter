@@ -14,6 +14,9 @@ local ship = nil
 local StarsCls = require("Stars")
 local stars = nil
 
+local BulletCls = require("Bullet")
+local bullet = nil
+
 local AssetsManager = require("AssetsManager")
 local Model = require("Model")
 
@@ -29,12 +32,14 @@ function love.load()
     Model.init()
     stars = StarsCls.new( Model.starsParams)
     ship = ShipCls.new( Model.shipParams )
+    bullet = BulletCls.new(Model.bulletParams)
 end
 
 function love.update(dt)
    -- print("update")
     ship:update(dt)
     stars:update(dt)
+    bullet:update(dt)
 end
 
 
@@ -42,6 +47,7 @@ function love.draw()
     --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
     stars:draw()
     ship:draw()
+    bullet:draw()
     
     --love.graphics.print("You Win!", 180, 350)
 end
