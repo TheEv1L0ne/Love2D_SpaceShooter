@@ -15,7 +15,6 @@ function Ship:init(params)
 end
 
 function Ship:update(dt)
-
     local left = Model.movement.left
     local right = Model.movement.right
     local up = Model.movement.up
@@ -42,14 +41,12 @@ function Ship:update(dt)
     local y1 = self.y + (y * self.speed * dt)
 
     local newX , newY = screenCoordinates(x1, y1, self.w, self.h)
-    isInBoundries = Model.getScreenBoundries(newX, newY, self.w, self.h)
+    isInBoundries = Model.isInScreenBoundries(newX, newY, self.w, self.h)
 
     if isInBoundries then
         self.x = self.x + (x * self.speed * dt)
         self.y = self.y + (y * self.speed * dt)
     end
-
-
 end
 
 function Ship:draw()
