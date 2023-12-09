@@ -65,9 +65,19 @@ end
 
 function Bullet:fly()
     for i=1, tablelength(self.bulletArr) do
-        local bullet = self.bulletArr[i]
-        bullet.y = bullet.y - 1
+        if self.bulletArr[i] ~= nil then
+            local bullet = self.bulletArr[i]
+            bullet.y = bullet.y - 1
+
+            if bullet.y < 0 then
+                self:DestoryBullet(i)
+            end
+        end
     end
+end
+
+function Bullet:DestoryBullet(bulletIndex)
+    table.remove(self.bulletArr,bulletIndex)
 end
 
 return Bullet
