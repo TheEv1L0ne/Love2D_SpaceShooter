@@ -34,5 +34,14 @@ Model.init = function()
 
 end
 
+Model.getScreenBoundries = function(x,y,w,h)
+    return (
+        (x < Model.stage.stageWidth - w) 
+        and ( 0  < x)
+        and (y < Model.stage.stageHeight - h)
+        and (0 < y)
+    )
+end
+
 
 return Model
