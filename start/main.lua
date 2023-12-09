@@ -25,6 +25,8 @@ local RIGHT_KEY = "right"
 local UP_KEY = "up"
 local DOWN_KEY = "down"
 
+local SPACE_KEY = "space"
+
 
 function love.load()
     print("love.load")
@@ -67,6 +69,10 @@ function love.keypressed(key)
         Model.movement.down = true
     end
 
+    if key == SPACE_KEY then
+        Model.fire.space = true
+    end
+
 end
 
 function love.keyreleased(key)
@@ -80,6 +86,10 @@ function love.keyreleased(key)
         Model.movement.up = false
     elseif key == DOWN_KEY then
         Model.movement.down = false
+    end
+
+    if key == SPACE_KEY then
+        Model.fire.space = false
     end
 end
 

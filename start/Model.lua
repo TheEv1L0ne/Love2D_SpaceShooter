@@ -6,6 +6,10 @@ local Model = {
         left = false,
         right = false,
         space = false
+    },
+    fire = 
+    {
+        space = false
     }
 }
 
