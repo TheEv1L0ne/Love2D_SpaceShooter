@@ -1,5 +1,6 @@
 local Bullet = classes.class()
 local Model = require("Model")
+local Ship = require("Ship")
 
 function Bullet:init(params)
     print("Bullet init!")
@@ -16,7 +17,7 @@ function Bullet:init(params)
     fireCooldown = 0
 end
 
-function Bullet:update(dt)
+function Bullet:update(dt, shipX , shipY)
     local fire = Model.fire.space
 
     if fireCooldown <= 0 then
@@ -26,9 +27,9 @@ function Bullet:update(dt)
     
             local bulletArr = self.bulletArr
     
-            local x = math.random() * stageWidth
-            local y = math.random() * stageHeight
-    
+            local x = shipX
+            local y = shipY
+
             local bullet = {x = x,y = y}
             table.insert(bulletArr, bullet)
 
@@ -49,10 +50,16 @@ function Bullet:draw()
     end
 end
 
+function screenCoordinates(x,y,w,h) -- offset ship graphics up-left
+    local newX = x - (w/2)
+    local newY = y - (h/2)
+    return newX, newY
+end
+
 function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
     return count
-  end
+end
 
 return Bullet

@@ -60,4 +60,8 @@ function screenCoordinates(x,y,w,h) -- offset ship graphics up-left
     return newX, newY
 end
 
+function Ship:shipCoordinates()
+    return self.x, self.y - (self.h/2)
+end
+
 return Ship
