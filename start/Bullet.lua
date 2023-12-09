@@ -12,25 +12,32 @@ function Bullet:init(params)
 
     local bulletArr = {}
     self.bulletArr = bulletArr
+
+    fireCooldown = 0
 end
 
 function Bullet:update(dt)
     local fire = Model.fire.space
 
-    if fire then
-        fire = false
+    if fireCooldown <= 0 then
+        if fire then
+            local stageWidth = Model.stage.stageWidth
+            local stageHeight = Model.stage.stageHeight
+    
+            local bulletArr = self.bulletArr
+    
+            local x = math.random() * stageWidth
+            local y = math.random() * stageHeight
+    
+            local bullet = {x = x,y = y}
+            table.insert(bulletArr, bullet)
 
-        local stageWidth = Model.stage.stageWidth
-        local stageHeight = Model.stage.stageHeight
-
-        local bulletArr = self.bulletArr
-
-        local x = math.random() * stageWidth
-        local y = math.random() * stageHeight
-
-        local bullet = {x = x,y = y}
-        table.insert(bulletArr, bullet)
+            fireCooldown = self.fireRate
+        end
+    else
+        fireCooldown = fireCooldown - dt
     end
+
 end
 
 function Bullet:draw()
