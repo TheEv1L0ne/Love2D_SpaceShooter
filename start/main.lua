@@ -41,9 +41,9 @@ function love.load()
     AssetsManager.init()
     Model.init()
     stars = StarsCls.new( Model.starsParams)
-    playerManager = PlayerManagerCls.new()
+    playerManager = PlayerManagerCls.new( Model.playerParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
-    enemySpawnManager = EnemySpawnCls.new(Model.enemyParams)
+    enemySpawnManager = EnemySpawnCls.new( Model.enemyParams )
     collision = Collision.new()
 
 end
@@ -56,7 +56,7 @@ function love.update(dt)
     if playerManager.ship ~= nil then
         bulletManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y - (playerManager.ship.h/2))
     end
-    
+
     enemySpawnManager:update(dt)
 
     if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
@@ -72,7 +72,7 @@ function love.update(dt)
     if (enemySpawnManager.enemyArr ~= nil) then
         local enemyColidedIndex = collision:checkCollision(playerManager.ship, enemySpawnManager.enemyArr)
         if enemyColidedIndex ~= -1 then
-            playerManager:destoryShip();
+            playerManager:takeDamage();
             enemySpawnManager:DestoryEnemy(enemyColidedIndex)
         end
     end

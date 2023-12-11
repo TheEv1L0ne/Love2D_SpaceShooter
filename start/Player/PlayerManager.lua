@@ -3,10 +3,15 @@ local PlayerManager = classes.class()
 local Model = require("Model")
 local ShipCls = require("Player/Ship")
 
-function PlayerManager:init()
+function PlayerManager:init(params)
     print("PlayerManager init!")
 
+    self.maxHp = params.maxHp
+    self.asset = params.asset
+
     self.ship = ShipCls.new( Model.shipParams )
+
+    currentHp = self.maxHp
 end
 
 function PlayerManager:update(dt)
@@ -41,11 +46,25 @@ function PlayerManager:draw()
     if self.ship ~= nil then
         self.ship:draw()
     end
+
+    for i = 1, currentHp do
+        local assetPosition = ((i - 1) * (self.asset:getWidth() + 10))  + 20
+        love.graphics.draw(self.asset, assetPosition, 0)
+    end
 end
 
 function PlayerManager:destoryShip()
     if self.ship ~= nil then
         self.ship = nil
+    end
+end
+
+function PlayerManager:takeDamage()
+    if self.ship ~= nil then
+        currentHp = currentHp - 1
+        if currentHp == 0 then
+            self:destoryShip()
+        end
     end
 end
 

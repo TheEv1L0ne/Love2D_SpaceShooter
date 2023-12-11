@@ -18,6 +18,11 @@ Model.shipParams = {
     speed = 500
 }
 
+Model.playerParams = {
+    maxHp = 3,
+    assetName = "health",
+}
+
 Model.starsParams = {
     radius = 1,
     speed = 100,
@@ -53,6 +58,7 @@ Model.init = function()
     Model.shipParams.asset = AssetsManager.sprites[Model.shipParams.assetName]
     Model.bulletParams.asset = AssetsManager.sprites[Model.bulletParams.assetName]
     Model.enemyParams.asset = AssetsManager.sprites[Model.enemyParams.assetName]
+    Model.playerParams.asset = AssetsManager.sprites[Model.playerParams.assetName]
     
     --define enemies here
 
