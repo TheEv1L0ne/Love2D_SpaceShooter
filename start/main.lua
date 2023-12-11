@@ -53,7 +53,10 @@ function love.update(dt)
     playerManager:update(dt)
     stars:update(dt)
     
-    bulletManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y - (playerManager.ship.h/2))
+    if playerManager.ship ~= nil then
+        bulletManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y - (playerManager.ship.h/2))
+    end
+    
     enemySpawnManager:update(dt)
 
     if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
@@ -63,6 +66,14 @@ function love.update(dt)
                 bulletManager:DestoryBullet(i);
                 enemySpawnManager:DestoryEnemy(enemyColidedIndex)
             end
+        end
+    end
+
+    if (enemySpawnManager.enemyArr ~= nil) then
+        local enemyColidedIndex = collision:checkCollision(playerManager.ship, enemySpawnManager.enemyArr)
+        if enemyColidedIndex ~= -1 then
+            playerManager:destoryShip();
+            enemySpawnManager:DestoryEnemy(enemyColidedIndex)
         end
     end
 end
