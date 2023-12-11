@@ -25,7 +25,7 @@ function Enemy:update(dt)
 
             local enemyArr = self.enemyArr
     
-            local x = math.random() * stageWidth
+            local x = Utils.clamp(math.random() * stageWidth, self.w/2 , stageWidth - (self.w/2))
             local y = 0
 
             local enemy = {x = x,y = y}

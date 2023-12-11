@@ -12,4 +12,16 @@ function Utils.tablelength(T)
     return count
 end
 
+function Utils.clamp(number, min, max)
+    if number < min then
+        return min
+    end
+    
+    if number > max then
+        return max
+    end
+
+    return number
+end
+
 return Utils
