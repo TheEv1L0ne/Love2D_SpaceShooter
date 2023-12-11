@@ -1,5 +1,4 @@
 local Bullet = classes.class()
-local Model = require("Model")
 local Utils = require("Utils")
 local Vector = require("Vector")
 
@@ -11,11 +10,6 @@ function Bullet:init(params)
     self.h = self.asset:getHeight()
     
     self.position = Vector.new(params.x, params.y)
-
-    local bulletArr = {}
-    self.bulletArr = bulletArr
-
-    fireCooldown = 0
 end
 
 function Bullet:draw()
