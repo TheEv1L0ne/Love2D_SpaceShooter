@@ -17,8 +17,8 @@ local stars = nil
 local BulletManagerCls = require("Bullets/BulletManager")
 local bulletManager = nil
 
-local EnemyCls = require("Enemy")
-local enemy = nil
+local EnemySpawnCls = require("Enemies/EnemySpawnManager")
+local enemySpawnManager = nil
 
 local Collision = require("Collision")
 local collision = nil
@@ -44,7 +44,7 @@ function love.load()
     stars = StarsCls.new( Model.starsParams)
     ship = ShipCls.new( Model.shipParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
-    enemy = EnemyCls.new(Model.enemyParams)
+    enemySpawnManager = EnemySpawnCls.new(Model.enemyParams)
     collision = Collision.new()
 
 end
@@ -55,7 +55,7 @@ function love.update(dt)
     stars:update(dt)
     
     bulletManager:update(dt, ship.position.x, ship.position.y - (ship.h/2))
-    enemy:update(dt)
+    enemySpawnManager:update(dt)
 end
 
 
@@ -64,7 +64,7 @@ function love.draw()
     stars:draw()
     ship:draw()
     bulletManager:draw()
-    enemy:draw()
+    enemySpawnManager:draw()
     
     -- love.graphics.print(distance, 180, 350)
 end

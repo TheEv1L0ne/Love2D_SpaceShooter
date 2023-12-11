@@ -1,16 +1,12 @@
-local Enemy = classes.class()
+local EnemySpawnManager = classes.class()
 local Model = require("Model")
-local Ship = require("Ship")
 local Utils = require("Utils")
 local Vector = require("Vector")
 
-function Enemy:init(params)
-    print("Enemy init!")
-    self.speed = params.speed
-    self.asset = params.asset
-    self.w = self.asset:getWidth()
-    self.h = self.asset:getHeight()
+local EnemyCls = require("Enemies/Enemy")
 
+function EnemySpawnManager:init(params)
+    print("EnemySpawnManager init!")
     local enemyArr = {}
     self.enemyArr = enemyArr
 
@@ -18,16 +14,19 @@ function Enemy:init(params)
     enemyCd = 1
 end
 
-function Enemy:update(dt)
+function EnemySpawnManager:update(dt)
     if enemySpawnCooldown <= 0 then
             local stageWidth = Model.stage.stageWidth
-
+        
             local enemyArr = self.enemyArr
-    
-            local x = Utils.clamp(math.random() * stageWidth, self.w/2 , stageWidth - (self.w/2))
-            local y = 0
 
-            local enemy = Vector.new(x,y)
+            local params = Model.enemyParams
+            local enemyMinSpawnX = params.asset:getWidth() / 2
+            local enemyMaxSPawnX = stageWidth - enemyMinSpawnX
+            params.x = Utils.clamp(math.random() * stageWidth, enemyMinSpawnX, enemyMaxSPawnX)
+            params.y = 0
+
+            local enemy = EnemyCls.new(params)
             table.insert(enemyArr, enemy)
 
             enemySpawnCooldown = enemyCd
@@ -38,30 +37,28 @@ function Enemy:update(dt)
     self:fly(dt)
 end
 
-function Enemy:draw()
+function EnemySpawnManager:draw()
     for i=1, Utils.tablelength(self.enemyArr) do
         local enemy = self.enemyArr[i]
-
-        local newX , newY = Utils.screenCoordinates(enemy.x, enemy.y, self.w, self.h)
-        love.graphics.draw(self.asset, newX,newY )
+        enemy:draw()
     end
 end
 
-function Enemy:fly(dt)
+function EnemySpawnManager:fly(dt)
     for i=1, Utils.tablelength(self.enemyArr) do
         if self.enemyArr[i] ~= nil then
             local enemy = self.enemyArr[i]
-            enemy.y = (enemy.y + self.speed * dt)
+            enemy:update(dt)
 
-            if enemy.y > Model.stage.stageHeight then
+            if enemy.position.y > Model.stage.stageHeight then
                 self:DestoryEnemy(i)
             end
         end
     end
 end 
 
-function Enemy:DestoryEnemy(enemyIndex)
+function EnemySpawnManager:DestoryEnemy(enemyIndex)
     table.remove(self.enemyArr,enemyIndex)
 end
 
-return Enemy
+return EnemySpawnManager
