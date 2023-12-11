@@ -7,10 +7,6 @@
 io.stdout:setvbuf("no")
 
 ----EXAMPLES: INSTANTIARING A CLASS
-
-local ShipCls = require("Player/Ship")
-local ship = nil
-
 local PlayerManagerCls = require("Player/PlayerManager")
 local playerManager = nil
 
