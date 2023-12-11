@@ -44,11 +44,9 @@ end
 function love.update(dt)
    -- print("update")
     ship:update(dt)
-    local shipX, shipY = ship:shipCoordinates()
-
     stars:update(dt)
     
-    bullet:update(dt, shipX, shipY)
+    bullet:update(dt, ship.x, ship.y)
     enemy:update(dt)
 end
 
@@ -60,7 +58,7 @@ function love.draw()
     bullet:draw()
     enemy:draw()
     
-    --love.graphics.print("You Win!", 180, 350)
+    love.graphics.print(tostring(ship.x), 180, 350)
 end
 
 

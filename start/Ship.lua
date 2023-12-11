@@ -55,8 +55,4 @@ function Ship:draw()
     love.graphics.draw(self.asset, newX,newY )
 end
 
-function Ship:shipCoordinates()
-    return self.x, self.y - (self.h/2)
-end
-
 return Ship
