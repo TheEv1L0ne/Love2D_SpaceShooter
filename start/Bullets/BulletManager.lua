@@ -36,7 +36,7 @@ function BulletManager:update(dt, shipX , shipY)
         fireCooldown = fireCooldown - dt
     end
 
-    self:fly()
+    self:fly(dt)
 end
 
 function BulletManager:draw()
@@ -46,11 +46,11 @@ function BulletManager:draw()
     end
 end
 
-function BulletManager:fly()
+function BulletManager:fly(dt)
     for i=1, Utils.tablelength(self.bulletArr) do
         if self.bulletArr[i] ~= nil then
             local bullet = self.bulletArr[i]
-            bullet:fly()
+            bullet:update(dt)
 
             if bullet.position.y < 0 then
                 self:DestoryBullet(i)

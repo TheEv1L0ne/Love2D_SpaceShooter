@@ -27,6 +27,7 @@ Model.starsParams = {
 Model.bulletParams = 
 {
     assetName = "bullet",
+    speed = 1000,
     x = 0,
     y = 0
 }
