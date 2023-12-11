@@ -19,6 +19,10 @@ end
 
 -- using rects for simplicity
 function Collision:rectOverlap(rectA, rectB)
+    if rectA == nil or rectB == nil then
+        return false
+    end
+    
     local xOverlap = self:valueInRange(rectA.position.x, rectB.position.x, rectB.position.x + rectB.w)
         or self:valueInRange(rectB.position.x, rectA.position.x, rectA.position.x + rectA.w);
 

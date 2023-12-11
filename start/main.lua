@@ -8,8 +8,11 @@ io.stdout:setvbuf("no")
 
 ----EXAMPLES: INSTANTIARING A CLASS
 
-local ShipCls = require("Ship")
+local ShipCls = require("Player/Ship")
 local ship = nil
+
+local PlayerManagerCls = require("Player/PlayerManager")
+local playerManager = nil
 
 local StarsCls = require("Stars")
 local stars = nil
@@ -42,7 +45,7 @@ function love.load()
     AssetsManager.init()
     Model.init()
     stars = StarsCls.new( Model.starsParams)
-    ship = ShipCls.new( Model.shipParams )
+    playerManager = PlayerManagerCls.new()
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
     enemySpawnManager = EnemySpawnCls.new(Model.enemyParams)
     collision = Collision.new()
@@ -51,10 +54,10 @@ end
 
 function love.update(dt)
    -- print("update")
-    ship:update(dt)
+    playerManager:update(dt)
     stars:update(dt)
     
-    bulletManager:update(dt, ship.position.x, ship.position.y - (ship.h/2))
+    bulletManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y - (playerManager.ship.h/2))
     enemySpawnManager:update(dt)
 
     if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
@@ -72,7 +75,7 @@ end
 function love.draw()
     --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
     stars:draw()
-    ship:draw()
+    playerManager:draw()
     bulletManager:draw()
     enemySpawnManager:draw()
 end
