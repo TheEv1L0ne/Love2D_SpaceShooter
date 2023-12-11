@@ -56,6 +56,10 @@ function love.update(dt)
     
     bulletManager:update(dt, ship.position.x, ship.position.y - (ship.h/2))
     enemySpawnManager:update(dt)
+
+    if enemySpawnManager.enemyArr ~= nil then
+        distance = collision:checkCollision(ship, enemySpawnManager.enemyArr)
+    end
 end
 
 
@@ -66,7 +70,7 @@ function love.draw()
     bulletManager:draw()
     enemySpawnManager:draw()
     
-    -- love.graphics.print(distance, 180, 350)
+    love.graphics.print(tostring(distance), 180, 350)
 end
 
 
