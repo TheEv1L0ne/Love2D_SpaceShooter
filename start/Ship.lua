@@ -2,15 +2,16 @@ local classes = require("classes")
 local Ship = classes.class()
 local Model = require("Model")
 local Utils = require("Utils")
+local Vector = require("Vector")
 
 function Ship:init(params)
     print("Ship init!")
     self.speed = params.speed
     self.asset = params.asset
-    self.x = Model.stage.stageWidth / 2 -- this will put ship in center of screen X
-    self.y = Model.stage.stageHeight / 2 -- this will put ship in center of screen Y
     self.w = self.asset:getWidth()
     self.h = self.asset:getHeight()
+
+    self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
 
     isInBoundries = false
 end
@@ -38,20 +39,20 @@ function Ship:update(dt)
         y = y + 1
     end
 
-    local x1 = self.x + (x * self.speed * dt)
-    local y1 = self.y + (y * self.speed * dt)
+    local x1 = self.position.x + (x * self.speed * dt)
+    local y1 = self.position.y + (y * self.speed * dt)
 
     local newX , newY = Utils.screenCoordinates(x1, y1, self.w, self.h)
     isInBoundries = Model.isInScreenBoundries(newX, newY, self.w, self.h)
 
     if isInBoundries then
-        self.x = self.x + (x * self.speed * dt)
-        self.y = self.y + (y * self.speed * dt)
+        self.position.x = self.position.x + (x * self.speed * dt)
+        self.position.y = self.position.y + (y * self.speed * dt)
     end
 end
 
 function Ship:draw()
-    local newX , newY = Utils.screenCoordinates(self.x, self.y, self.w, self.h)
+    local newX , newY = Utils.screenCoordinates(self.position.x, self.position.y, self.w, self.h)
     love.graphics.draw(self.asset, newX,newY )
 end
 
