@@ -14,8 +14,8 @@ local ship = nil
 local StarsCls = require("Stars")
 local stars = nil
 
-local BulletCls = require("Bullet")
-local bullet = nil
+local BulletManagerCls = require("Bullets/BulletManager")
+local bulletManager = nil
 
 local EnemyCls = require("Enemy")
 local enemy = nil
@@ -27,6 +27,7 @@ local AssetsManager = require("AssetsManager")
 local Model = require("Model")
 
 local Vector = require("Vector")
+local Utils = require("Utils")
 
 local LEFT_KEY = "left"
 local RIGHT_KEY = "right"
@@ -42,11 +43,10 @@ function love.load()
     Model.init()
     stars = StarsCls.new( Model.starsParams)
     ship = ShipCls.new( Model.shipParams )
-    bullet = BulletCls.new(Model.bulletParams)
+    bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
     enemy = EnemyCls.new(Model.enemyParams)
     collision = Collision.new()
 
-    local v1 = Vector.new(2,4)
 end
 
 function love.update(dt)
@@ -54,10 +54,8 @@ function love.update(dt)
     ship:update(dt)
     stars:update(dt)
     
-    bullet:update(dt, ship.position.x, ship.position.y - (ship.h/2))
+    bulletManager:update(dt, ship.position.x, ship.position.y - (ship.h/2))
     enemy:update(dt)
-
-    collision:checkCollision(ship.position.x, enemy.enemyArr)
 end
 
 
@@ -65,10 +63,10 @@ function love.draw()
     --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
     stars:draw()
     ship:draw()
-    bullet:draw()
+    bulletManager:draw()
     enemy:draw()
     
-    love.graphics.print(tostring(ship.position.x), 180, 350)
+    -- love.graphics.print(distance, 180, 350)
 end
 
 

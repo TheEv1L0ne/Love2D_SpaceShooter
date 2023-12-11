@@ -27,6 +27,12 @@ Model.starsParams = {
 Model.bulletParams = 
 {
     assetName = "bullet",
+    x = 0,
+    y = 0
+}
+
+Model.bulletManagerParams = 
+{
     fireRate = 0.2
 }
 

@@ -1,35 +1,33 @@
-local Bullet = classes.class()
+local BulletManager = classes.class()
 local Model = require("Model")
-local Ship = require("Ship")
 local Utils = require("Utils")
 local Vector = require("Vector")
 
-function Bullet:init(params)
-    print("Bullet init!")
+local BulletCls = require("Bullets/Bullet")
+
+
+function BulletManager:init(params)
+    print("BulletManager init!")
+
     self.fireRate = params.fireRate
-    self.asset = params.asset
-    self.w = self.asset:getWidth()
-    self.h = self.asset:getHeight()
-
-    self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
-
     local bulletArr = {}
     self.bulletArr = bulletArr
 
     fireCooldown = 0
 end
 
-function Bullet:update(dt, shipX , shipY)
+function BulletManager:update(dt, shipX , shipY)
     local fire = Model.fire.space
 
     if fireCooldown <= 0 then
         if fire then
-            local stageWidth = Model.stage.stageWidth
-            local stageHeight = Model.stage.stageHeight
-    
             local bulletArr = self.bulletArr
 
-            local bullet = Vector.new(shipX,shipY)
+            local params = Model.bulletParams
+            params.x = shipX
+            params.y = shipY
+
+            local bullet = BulletCls.new(params)
             table.insert(bulletArr, bullet)
 
             fireCooldown = self.fireRate
@@ -41,30 +39,28 @@ function Bullet:update(dt, shipX , shipY)
     self:fly()
 end
 
-function Bullet:draw()
+function BulletManager:draw()
     for i=1, Utils.tablelength(self.bulletArr) do
         local bullet = self.bulletArr[i]
-
-        local newX , newY = Utils.screenCoordinates(bullet.x, bullet.y, self.w, self.h)
-        love.graphics.draw(self.asset, newX,newY )
+        bullet:draw()
     end
 end
 
-function Bullet:fly()
+function BulletManager:fly()
     for i=1, Utils.tablelength(self.bulletArr) do
         if self.bulletArr[i] ~= nil then
             local bullet = self.bulletArr[i]
-            bullet.y = bullet.y - 1
+            bullet:fly()
 
-            if bullet.y < 0 then
+            if bullet.position.y < 0 then
                 self:DestoryBullet(i)
             end
         end
     end
 end 
 
-function Bullet:DestoryBullet(bulletIndex)
+function BulletManager:DestoryBullet(bulletIndex)
     table.remove(self.bulletArr,bulletIndex)
 end
 
-return Bullet
+return BulletManager

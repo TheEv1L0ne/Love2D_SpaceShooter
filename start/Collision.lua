@@ -1,9 +1,11 @@
 local classes = require("classes")
 local Collision = classes.class()
+local Utils = require("Utils")
 
-function Collision:init(params)
-    print("Collision init!")
- 
+function Collision:checkCollision(x, y, minDistance)
+    local distance = Utils.distanceBetweenTwoPoints(x,y)
+
+    return distance <= minDistance
 end
 
 return Collision

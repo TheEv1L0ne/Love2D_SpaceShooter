@@ -16,12 +16,20 @@ function Utils.clamp(number, min, max)
     if number < min then
         return min
     end
-    
+
     if number > max then
         return max
     end
 
     return number
+end
+
+function Utils.distanceFrom(x1,y1,x2,y2)
+    return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2) 
+end
+
+function Utils.distanceBetweenTwoPoints(p1, p2)
+    return math.sqrt((p2.x - p1.x) ^ 2 + (p2.y - p1.y) ^ 2) 
 end
 
 return Utils
