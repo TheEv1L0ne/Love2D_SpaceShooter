@@ -57,8 +57,14 @@ function love.update(dt)
     bulletManager:update(dt, ship.position.x, ship.position.y - (ship.h/2))
     enemySpawnManager:update(dt)
 
-    if enemySpawnManager.enemyArr ~= nil then
-        distance = collision:checkCollision(ship, enemySpawnManager.enemyArr)
+    if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
+        for i = 1, Utils.tablelength(bulletManager.bulletArr) do
+            local enemyColidedIndex = collision:checkCollision(bulletManager.bulletArr[i], enemySpawnManager.enemyArr)
+            if enemyColidedIndex ~= -1 then
+                bulletManager:DestoryBullet(i);
+                enemySpawnManager:DestoryEnemy(enemyColidedIndex)
+            end
+        end
     end
 end
 
@@ -69,13 +75,10 @@ function love.draw()
     ship:draw()
     bulletManager:draw()
     enemySpawnManager:draw()
-    
-    love.graphics.print(tostring(distance), 180, 350)
 end
 
 
 function love.keypressed(key)
-    print(key)
     if key == LEFT_KEY then
         Model.movement.left = true
     elseif key == RIGHT_KEY then
