@@ -2,13 +2,12 @@ local Enemy = classes.class()
 local Model = require("Model")
 local Ship = require("Ship")
 local Utils = require("Utils")
+local Vector = require("Vector")
 
 function Enemy:init(params)
     print("Enemy init!")
     self.speed = params.speed
     self.asset = params.asset
-    self.x = Model.stage.stageWidth / 2
-    self.y = Model.stage.stageHeight / 2
     self.w = self.asset:getWidth()
     self.h = self.asset:getHeight()
 
@@ -28,7 +27,7 @@ function Enemy:update(dt)
             local x = Utils.clamp(math.random() * stageWidth, self.w/2 , stageWidth - (self.w/2))
             local y = 0
 
-            local enemy = {x = x,y = y}
+            local enemy = Vector.new(x,y)
             table.insert(enemyArr, enemy)
 
             enemySpawnCooldown = enemyCd
