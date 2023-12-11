@@ -54,7 +54,7 @@ function love.update(dt)
     ship:update(dt)
     stars:update(dt)
     
-    bullet:update(dt, ship.position.x, ship.position.y)
+    bullet:update(dt, ship.position.x, ship.position.y - (ship.h/2))
     enemy:update(dt)
 
     collision:checkCollision(ship.position.x, enemy.enemyArr)

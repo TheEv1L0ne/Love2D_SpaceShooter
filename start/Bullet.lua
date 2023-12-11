@@ -2,15 +2,16 @@ local Bullet = classes.class()
 local Model = require("Model")
 local Ship = require("Ship")
 local Utils = require("Utils")
+local Vector = require("Vector")
 
 function Bullet:init(params)
     print("Bullet init!")
     self.fireRate = params.fireRate
     self.asset = params.asset
-    self.x = Model.stage.stageWidth / 2
-    self.y = Model.stage.stageHeight / 2
     self.w = self.asset:getWidth()
     self.h = self.asset:getHeight()
+
+    self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
 
     local bulletArr = {}
     self.bulletArr = bulletArr
@@ -27,11 +28,8 @@ function Bullet:update(dt, shipX , shipY)
             local stageHeight = Model.stage.stageHeight
     
             local bulletArr = self.bulletArr
-    
-            local x = shipX
-            local y = shipY
 
-            local bullet = {x = x,y = y}
+            local bullet = Vector.new(shipX,shipY)
             table.insert(bulletArr, bullet)
 
             fireCooldown = self.fireRate
