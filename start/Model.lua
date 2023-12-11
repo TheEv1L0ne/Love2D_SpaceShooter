@@ -47,6 +47,10 @@ Model.enemyParams = {
     speed = 500
 }
 
+Model.enemySpawnParams = {
+    totalEnemies = 20
+}
+
 Model.init = function()
     Model.stage = {
         stageHeight = love.graphics.getHeight(),

@@ -9,13 +9,14 @@ function EnemySpawnManager:init(params)
     print("EnemySpawnManager init!")
     local enemyArr = {}
     self.enemyArr = enemyArr
+    self.enemiesLeftToSpawn = params.totalEnemies
 
     enemySpawnCooldown = 0
     enemyCd = 1
 end
 
 function EnemySpawnManager:update(dt)
-    if enemySpawnCooldown <= 0 then
+    if (enemySpawnCooldown <= 0) and (self.enemiesLeftToSpawn > 0) then
             local stageWidth = Model.stage.stageWidth
         
             local enemyArr = self.enemyArr
@@ -30,6 +31,8 @@ function EnemySpawnManager:update(dt)
             table.insert(enemyArr, enemy)
 
             enemySpawnCooldown = enemyCd
+
+            self.enemiesLeftToSpawn = self.enemiesLeftToSpawn - 1
     else
         enemySpawnCooldown = enemySpawnCooldown - dt
     end

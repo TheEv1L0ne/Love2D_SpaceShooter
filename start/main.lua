@@ -43,7 +43,7 @@ function love.load()
     stars = StarsCls.new( Model.starsParams)
     playerManager = PlayerManagerCls.new( Model.playerParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
-    enemySpawnManager = EnemySpawnCls.new( Model.enemyParams )
+    enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
     collision = Collision.new()
 
 end
@@ -85,6 +85,14 @@ function love.draw()
     playerManager:draw()
     bulletManager:draw()
     enemySpawnManager:draw()
+
+    if playerManager.currentHp <= 0 then
+        love.graphics.print("failed!", 0, 0)
+    end
+    
+    if (enemySpawnManager.enemiesLeftToSpawn == 0) and (Utils.tablelength(enemySpawnManager.enemyArr) == 0) then
+        love.graphics.print("WIN!", 0, 0)
+    end
 end
 
 

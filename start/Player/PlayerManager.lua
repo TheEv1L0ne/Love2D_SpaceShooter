@@ -11,7 +11,7 @@ function PlayerManager:init(params)
 
     self.ship = ShipCls.new( Model.shipParams )
 
-    currentHp = self.maxHp
+    self.currentHp = self.maxHp
 end
 
 function PlayerManager:update(dt)
@@ -47,7 +47,7 @@ function PlayerManager:draw()
         self.ship:draw()
     end
 
-    for i = 1, currentHp do
+    for i = 1, self.currentHp do
         local assetPosition = ((i - 1) * (self.asset:getWidth() + 10))  + 20
         love.graphics.draw(self.asset, assetPosition, 0)
     end
@@ -61,8 +61,8 @@ end
 
 function PlayerManager:takeDamage()
     if self.ship ~= nil then
-        currentHp = currentHp - 1
-        if currentHp == 0 then
+        self.currentHp = self.currentHp - 1
+        if self.currentHp == 0 then
             self:destoryShip()
         end
     end
