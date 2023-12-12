@@ -19,8 +19,11 @@ local bulletManager = nil
 local EnemySpawnCls = require("Enemies/EnemySpawnManager")
 local enemySpawnManager = nil
 
-local Collision = require("Collision")
+local CollisionCls = require("Collision")
 local collision = nil
+
+local ExplosionManagerCls = require("ExplosionManager")
+local explosionManager = nil
 
 local AssetsManager = require("AssetsManager")
 local Model = require("Model")
@@ -43,6 +46,8 @@ function love.load()
     AssetsManager.init()
     Model.init()
     -- initGame()
+
+    explosionManager = ExplosionManagerCls.new()
 end
 
 function initGame()
@@ -50,7 +55,7 @@ function initGame()
     playerManager = PlayerManagerCls.new( Model.playerParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
     enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
-    collision = Collision.new()
+    collision = CollisionCls.new()
 end
 
 function isGameInit()
@@ -70,6 +75,10 @@ function resetGame()
 end
 
 function love.update(dt)
+
+
+    explosionManager:update(dt)
+
    -- print("update")
     if not isGameInit() then
         return
@@ -89,6 +98,9 @@ function love.update(dt)
         for i = 1, Utils.tablelength(bulletManager.bulletArr) do
             local enemyColidedIndex = collision:checkCollision(bulletManager.bulletArr[i], enemySpawnManager.enemyArr)
             if enemyColidedIndex ~= -1 then
+                -- not best position... using bullet one and should use enemy... will refactor if I have time
+                explosionManager:createExplosion(bulletManager.bulletArr[i].position)
+
                 bulletManager:DestoryBullet(i);
                 enemySpawnManager:DestoryEnemy(enemyColidedIndex)
             end
@@ -114,6 +126,10 @@ end
 
 
 function love.draw()
+
+    explosionManager:draw()
+
+
     if not isGameInit() then
         love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
         return
@@ -125,6 +141,7 @@ function love.draw()
     bulletManager:draw()
     enemySpawnManager:draw()
 
+    
     if playerManager.currentHp <= 0 then
         love.graphics.print("failed!", 0, 0)
     end

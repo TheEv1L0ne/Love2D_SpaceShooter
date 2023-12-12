@@ -51,6 +51,10 @@ Model.enemySpawnParams = {
     totalEnemies = 50
 }
 
+Model.explosionParams = {
+    assetName = "explosion"
+}
+
 Model.init = function()
     Model.stage = {
         stageHeight = love.graphics.getHeight(),
@@ -63,6 +67,7 @@ Model.init = function()
     Model.bulletParams.asset = AssetsManager.sprites[Model.bulletParams.assetName]
     Model.enemyParams.asset = AssetsManager.sprites[Model.enemyParams.assetName]
     Model.playerParams.asset = AssetsManager.sprites[Model.playerParams.assetName]
+    Model.explosionParams.asset = AssetsManager.sprites[Model.explosionParams.assetName]
     
     --define enemies here
 
