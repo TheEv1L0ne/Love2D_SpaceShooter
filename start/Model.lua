@@ -48,7 +48,7 @@ Model.enemyParams = {
 }
 
 Model.enemySpawnParams = {
-    totalEnemies = 20
+    totalEnemies = 50
 }
 
 Model.init = function()

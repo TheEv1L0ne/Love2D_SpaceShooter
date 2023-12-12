@@ -35,22 +35,48 @@ local DOWN_KEY = "down"
 
 local SPACE_KEY = "space"
 
+local s = ""
+
 
 function love.load()
     print("love.load")
     AssetsManager.init()
     Model.init()
+    -- initGame()
+end
+
+function initGame()
     stars = StarsCls.new( Model.starsParams)
     playerManager = PlayerManagerCls.new( Model.playerParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
     enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
     collision = Collision.new()
+end
 
+function isGameInit()
+    return playerManager ~= nil 
+    and bulletManager  ~= nil 
+    and enemySpawnManager  ~= nil
+    and collision  ~= nil
+    and stars  ~= nil
+end
+
+function resetGame()
+    playerManager = nil 
+    bulletManager  = nil 
+    enemySpawnManager  = nil
+    collision  = nil
+    stars  = nil
 end
 
 function love.update(dt)
    -- print("update")
+    if not isGameInit() then
+        return
+    end
+
     playerManager:update(dt)
+
     stars:update(dt)
     
     if playerManager.ship ~= nil then
@@ -74,12 +100,25 @@ function love.update(dt)
         if enemyColidedIndex ~= -1 then
             playerManager:takeDamage();
             enemySpawnManager:DestoryEnemy(enemyColidedIndex)
+
+            if playerManager.currentHp <= 0 then
+                resetGame()
+            end
         end
+    end
+
+    if (enemySpawnManager.enemiesLeftToSpawn == 0) and (Utils.tablelength(enemySpawnManager.enemyArr) == 0) then
+        resetGame()
     end
 end
 
 
 function love.draw()
+    if not isGameInit() then
+        love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
+        return
+    end
+
     --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
     stars:draw()
     playerManager:draw()
@@ -130,6 +169,10 @@ function love.keyreleased(key)
 
     if key == SPACE_KEY then
         Model.fire.space = false
+    end
+
+    if key == "s" then
+        initGame()
     end
 end
 
