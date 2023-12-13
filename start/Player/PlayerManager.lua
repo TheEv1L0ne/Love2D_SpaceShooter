@@ -68,4 +68,11 @@ function PlayerManager:takeDamage()
     end
 end
 
+function PlayerManager:increaseHealth()
+    self.currentHp = self.currentHp + 1
+    if self.currentHp > 3 then
+        self.currentHp = 3
+    end
+end
+
 return PlayerManager

@@ -14,6 +14,8 @@ function ItemCoin:init()
 
     self.fadeTween = nil
     self.properties = nil
+
+    self.itemName = "coin"
 end
 
 function ItemCoin:setParams(params)

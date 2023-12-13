@@ -42,15 +42,16 @@ local DOWN_KEY = "down"
 local SPACE_KEY = "space"
 
 local s = ""
+local score = 0
 
 
 function love.load()
     print("love.load")
     AssetsManager.init()
     Model.init()
-    -- initGame()
-
     explosionManager = ExplosionManagerCls.new()
+
+    score = 0
 end
 
 function initGame()
@@ -106,6 +107,16 @@ function love.update(dt)
     if (itemManager.itemCoinArr ~= nil) then
         local itemColidedIndex = collision:checkCollision(playerManager.ship, itemManager.itemCoinArr)
         if itemColidedIndex ~= -1 then
+            local itemName = itemManager.itemCoinArr[itemColidedIndex].itemName
+
+            if itemName == "coin" then
+                score = score + 33
+            end
+
+            if itemName == "health" then
+                playerManager:increaseHealth()
+            end
+
             itemManager:removeItem(itemColidedIndex)
         end
     end
@@ -119,6 +130,9 @@ function love.update(dt)
 
                 bulletManager:DestoryBullet(i);
                 enemySpawnManager:DestoryEnemy(enemyColidedIndex)
+
+                --Increase score by 100 when enemy is destoryed
+                score = score + 100
             end
         end
     end
@@ -151,21 +165,14 @@ function love.draw()
         return
     end
 
+    love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
+
     --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
     stars:draw()
     playerManager:draw()
     bulletManager:draw()
     enemySpawnManager:draw()
     itemManager:draw()
-
-    
-    if playerManager.currentHp <= 0 then
-        love.graphics.print("failed!", 0, 0)
-    end
-    
-    if (enemySpawnManager.enemiesLeftToSpawn == 0) and (Utils.tablelength(enemySpawnManager.enemyArr) == 0) then
-        love.graphics.print("WIN!", 0, 0)
-    end
 end
 
 

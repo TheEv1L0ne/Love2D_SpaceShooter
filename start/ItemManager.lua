@@ -13,8 +13,8 @@ function ItemManager:init()
     local itemCoinArr = {}
     self.itemCoinArr = itemCoinArr
 
-    itemSpawnCooldown = 2
-    itemCd = 2
+    itemSpawnCooldown = 2 --initial spawn cooldown
+    itemCd = 4 --after then every 4 seconds
 end
 
 function ItemManager:update(dt)
@@ -36,8 +36,8 @@ end
 function ItemManager:canSpawnItem(dt)
     if (itemSpawnCooldown <= 0) then
 
-        local random = math.random() * 2
-        if random <= 1 then
+        local random = math.random() * 100
+        if random <= 85 then --15% chance to spawn health pack
             self:spawnItem(self.itemCoinArr, CoinCls.new(), Model.coinParams)
         else
             self:spawnItem(self.itemCoinArr, HealthCls.new(), Model.healthParams)

@@ -14,6 +14,8 @@ function ItemHealthPack:init(params)
 
     self.fadeTween = nil
     self.properties = nil
+
+    self.itemName = "health"
 end
 
 function ItemHealthPack:setParams(params)
