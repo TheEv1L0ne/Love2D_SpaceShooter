@@ -25,6 +25,9 @@ local collision = nil
 local ExplosionManagerCls = require("ExplosionManager")
 local explosionManager = nil
 
+local ItemManagerCls = require("ItemManager")
+local itemManager = nil
+
 local AssetsManager = require("AssetsManager")
 local Model = require("Model")
 
@@ -55,6 +58,7 @@ function initGame()
     playerManager = PlayerManagerCls.new( Model.playerParams )
     bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
     enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
+    itemManager = ItemManagerCls.new()
     collision = CollisionCls.new()
 end
 
@@ -64,6 +68,7 @@ function isGameInit()
     and enemySpawnManager  ~= nil
     and collision  ~= nil
     and stars  ~= nil
+    and itemManager  ~= nil
 end
 
 function resetGame()
@@ -72,6 +77,7 @@ function resetGame()
     enemySpawnManager  = nil
     collision  = nil
     stars  = nil
+    itemManager = nil
 end
 
 function love.update(dt)
@@ -79,10 +85,13 @@ function love.update(dt)
 
     explosionManager:update(dt)
 
+
    -- print("update")
     if not isGameInit() then
         return
     end
+
+    itemManager:update(dt)
 
     playerManager:update(dt)
 
@@ -93,6 +102,13 @@ function love.update(dt)
     end
 
     enemySpawnManager:update(dt)
+
+    if (itemManager.itemCoinArr ~= nil) then
+        local itemColidedIndex = collision:checkCollision(playerManager.ship, itemManager.itemCoinArr)
+        if itemColidedIndex ~= -1 then
+            itemManager:removeItem(itemColidedIndex)
+        end
+    end
 
     if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
         for i = 1, Utils.tablelength(bulletManager.bulletArr) do
@@ -140,6 +156,7 @@ function love.draw()
     playerManager:draw()
     bulletManager:draw()
     enemySpawnManager:draw()
+    itemManager:draw()
 
     
     if playerManager.currentHp <= 0 then
