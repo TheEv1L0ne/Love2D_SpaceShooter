@@ -59,6 +59,10 @@ Model.coinParams = {
     assetName = "coin"
 }
 
+Model.healthParams = {
+    assetName = "health"
+}
+
 Model.init = function()
     Model.stage = {
         stageHeight = love.graphics.getHeight(),
@@ -73,8 +77,7 @@ Model.init = function()
     Model.playerParams.asset = AssetsManager.sprites[Model.playerParams.assetName]
     Model.explosionParams.asset = AssetsManager.sprites[Model.explosionParams.assetName]
     Model.coinParams.asset = AssetsManager.sprites[Model.coinParams.assetName]
-    
-    --define enemies here
+    Model.healthParams.asset = AssetsManager.sprites[Model.healthParams.assetName]
 
 end
 

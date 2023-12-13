@@ -18,6 +18,21 @@ end
 
 function ItemManager:update(dt)
 
+    self:canSpawnItem(dt)
+
+    for i=1, Utils.tablelength(self.itemCoinArr) do
+        if self.itemCoinArr[i] ~= nil then
+            local item = self.itemCoinArr[i]
+            item:update(dt)
+
+            if ((love.timer.getTime() - item.timeCreated) > 3) then
+                self:removeItem(i)
+            end
+        end
+    end
+end
+
+function ItemManager:canSpawnItem(dt)
     if (itemSpawnCooldown <= 0) then
         local stageWidth = Model.stage.stageWidth
         local stageHeight = Model.stage.stageHeight
@@ -41,17 +56,6 @@ function ItemManager:update(dt)
         itemSpawnCooldown = itemCd
     else
         itemSpawnCooldown = itemSpawnCooldown - dt
-    end
-
-    for i=1, Utils.tablelength(self.itemCoinArr) do
-        if self.itemCoinArr[i] ~= nil then
-            local item = self.itemCoinArr[i]
-            item:update(dt)
-
-            if ((love.timer.getTime() - item.timeCreated) > 3) then
-                self:removeItem(i)
-            end
-        end
     end
 end
 
