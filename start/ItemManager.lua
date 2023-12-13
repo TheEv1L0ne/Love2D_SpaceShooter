@@ -34,7 +34,7 @@ end
 
 function ItemManager:canSpawnItem(dt)
     if (itemSpawnCooldown <= 0) then
-        self:spawnItem()
+        self:spawnItem(self.itemCoinArr, CoinCls.new(), Model.coinParams)
 
         itemSpawnCooldown = itemCd
     else
@@ -42,13 +42,13 @@ function ItemManager:canSpawnItem(dt)
     end
 end
 
-function ItemManager:spawnItem()
+function ItemManager:spawnItem(itemArray, itemClass, itemParams)
     local stageWidth = Model.stage.stageWidth
     local stageHeight = Model.stage.stageHeight
 
-    local itemArr = self.itemCoinArr
+    local itemArr = itemArray
 
-    local params = Model.coinParams
+    local params = itemParams
     local coinMinSpawnX = params.asset:getWidth() / 2
     local coinMaxSPawnX = stageWidth - coinMinSpawnX
 
@@ -58,7 +58,8 @@ function ItemManager:spawnItem()
     local x = Utils.clamp(math.random() * stageWidth, coinMinSpawnX, coinMaxSPawnX)
     local y = Utils.clamp(math.random() * stageHeight, coinMinSpawnY, coinMaxSPawnY)
 
-    local coin = CoinCls.new(params)
+    local coin = itemClass
+    coin:setParams(params)
     coin:createItem(Vector.new(x,y))
     table.insert(itemArr, coin)
 end
