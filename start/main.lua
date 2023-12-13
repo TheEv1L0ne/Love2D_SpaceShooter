@@ -41,7 +41,6 @@ local DOWN_KEY = "down"
 
 local SPACE_KEY = "space"
 
-local s = ""
 local score = 0
 
 
