@@ -17,7 +17,7 @@ function ExplosionManager:update(dt)
             local explosion = self.explosionArr[i]
             explosion:update(dt)
 
-            if explosion.explosionAlfa == 1 then
+            if explosion.explosionAlpha == 1 then
                 self:removeExplosion(i)
             end
         end
