@@ -7,10 +7,6 @@ local tween = require("tween")
 
 function ItemCoin:init()
     print("ItemCoin init!")
-    -- self.asset = params.asset
-    -- self.w = self.asset:getWidth()
-    -- self.h = self.asset:getHeight()
-
     self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
 
     self.ItemCoinAlpha = 1
@@ -24,7 +20,6 @@ function ItemCoin:setParams(params)
     self.asset = params.asset
     self.w = self.asset:getWidth()
     self.h = self.asset:getHeight()
-    self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
 end
 
 function ItemCoin:update(dt)

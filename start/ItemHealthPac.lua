@@ -7,28 +7,35 @@ local tween = require("tween")
 
 function ItemHealthPack:init(params)
     print("ItemHealthPack init!")
-    self.asset = params.asset
-    self.w = self.asset:getWidth()
-    self.h = self.asset:getHeight()
-
     self.position = Vector.new(Model.stage.stageWidth / 2, Model.stage.stageHeight / 2)
 
     self.ItemHealthPackAlpha = 1
+    self.timeCreated = 0
+
+    self.fadeTween = nil
+    self.properties = nil
+end
+
+function ItemHealthPack:setParams(params)
+    self.asset = params.asset
+    self.w = self.asset:getWidth()
+    self.h = self.asset:getHeight()
 end
 
 function ItemHealthPack:update(dt)
-    fadeTween:update(dt)
+    self.fadeTween:update(dt)
 
     --not the best solution but at least it works! xD
-    self.ItemHealthPackAlpha = properties.ItemHealthPackAlpha
+    self.ItemHealthPackAlpha = self.properties.ItemHealthPackAlpha
 end
 
 function ItemHealthPack:createItem(position)
 
+    self.timeCreated = love.timer.getTime()
     self.position = Vector.new(position.x, position.y)
 
-    properties = {ItemHealthPackAlpha = 0}
-    fadeTween = tween.new(0.3, properties, {ItemHealthPackAlpha = 1}, 'linear')
+    self.properties = {ItemHealthPackAlpha = 0}
+    self.fadeTween = tween.new(0.3, self.properties, {ItemHealthPackAlpha = 1}, 'linear')
 end
 
 function ItemHealthPack:draw()

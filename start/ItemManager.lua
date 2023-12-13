@@ -3,6 +3,7 @@ local ItemManager = classes.class()
 local Model = require("Model")
 local Utils = require("Utils")
 local CoinCls = require("ItemCoin")
+local HealthCls = require("ItemHealthPac")
 
 local Vector = require("Vector")
 
@@ -34,7 +35,13 @@ end
 
 function ItemManager:canSpawnItem(dt)
     if (itemSpawnCooldown <= 0) then
-        self:spawnItem(self.itemCoinArr, CoinCls.new(), Model.coinParams)
+
+        local random = math.random() * 2
+        if random <= 1 then
+            self:spawnItem(self.itemCoinArr, CoinCls.new(), Model.coinParams)
+        else
+            self:spawnItem(self.itemCoinArr, HealthCls.new(), Model.healthParams)
+        end
 
         itemSpawnCooldown = itemCd
     else
