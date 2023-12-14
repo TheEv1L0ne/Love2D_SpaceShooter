@@ -116,6 +116,22 @@ function love.update(dt)
                 playerManager:increaseHealth()
             end
 
+            if itemName == "fireAngles" then
+                -- empty?
+            end
+
+            if itemName == "fireRate" then
+                -- empty?
+            end
+
+            if itemName == "magnet" then
+                -- empty?
+            end
+
+            if itemName == "shield" then
+                -- empty?
+            end
+
             itemManager:removeItem(itemColidedIndex)
         end
     end

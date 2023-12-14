@@ -12,8 +12,8 @@ function ItemManager:init()
     local itemCoinArr = {}
     self.itemCoinArr = itemCoinArr
 
-    itemSpawnCooldown = 2 --initial spawn cooldown
-    itemCd = 4 --after then every 4 seconds
+    itemSpawnCooldown = 1 --initial spawn cooldown
+    itemCd = 2 --after then every x seconds
 end
 
 function ItemManager:update(dt)
@@ -35,20 +35,33 @@ end
 function ItemManager:canSpawnItem(dt)
     if (itemSpawnCooldown <= 0) then
 
-        local random = math.random() * 100
-        local params = nil
-        if random <= 85 then --15% chance to spawn health pack
-            params = Model.coinParams
-        else
-            params = Model.healthParams
-        end
-
+        local params = self:chooseNextItemToSpawn()
         self:spawnItem(self.itemCoinArr, ItemCls.new(), params)
 
         itemSpawnCooldown = itemCd
     else
         itemSpawnCooldown = itemSpawnCooldown - dt
     end
+end
+
+function ItemManager:chooseNextItemToSpawn()
+    local random = math.random() * 100
+    local params = nil
+    if (random <= 15) then
+        params = Model.magnetParams
+    elseif (random > 15) and (random <= 30) then
+        params = Model.healthParams
+    elseif (random > 30) and (random <= 45) then
+        params = Model.fireAngleParams
+    elseif (random > 45) and (random <= 60) then
+        params = Model.fireRateParams
+    elseif (random > 60) and (random <= 75) then
+        params = Model.shieldParams
+    else
+        params = Model.coinParams
+    end
+
+    return params
 end
 
 function ItemManager:spawnItem(itemArray, itemClass, itemParams)
