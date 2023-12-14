@@ -21,10 +21,15 @@ function BulletManager:update(dt, shipX , shipY)
 
     if fireCooldown <= 0 then
         if fire then
-            self:spawnBullet(shipX -10, shipY, 0)
-            self:spawnBullet(shipX + 10, shipY, 0)
-            self:spawnBullet(shipX , shipY, -1)
-            self:spawnBullet(shipX , shipY, 1)
+
+            local r = self:GunAngles(1)
+            local n = self:numberOfGuns(1)
+            for i = 1, table.getn(r) do
+                for j = 1, table.getn(n) do
+                    self:spawnBullet(shipX + n[j], shipY, r[i])
+                end
+            end
+           
 
             fireCooldown = self.fireRate
         end
@@ -35,6 +40,51 @@ function BulletManager:update(dt, shipX , shipY)
     self:fly(dt)
 end
 
+function BulletManager:numberOfGuns(number)
+    local index = 1
+    local array = {}
+    if math.fmod(number, 2) == 0 then
+        for i = 1, number / 2 do
+            array[index] = -10*i;
+            array[index+1] = 10*i;
+            index= index + 2
+        end
+    else
+        array[index] = 0
+        index= index + 1
+        for i = 1, (number - 1) / 2 do
+            array[index] = -10*i;
+            array[index+1] = 10*i;
+            index= index + 2
+        end
+    end
+
+    return array
+end
+
+function BulletManager:GunAngles(number)
+    local index = 1
+    local array = {}
+
+    local x = 2 / (number - 1)
+    if math.fmod(number, 2) == 0 then
+        for i = 1, number / 2 do
+            array[index] = -x*i * 0.1;
+            array[index+1] = x*i * 0.1;
+            index= index + 2
+        end
+    else
+        array[index] = 0
+        index= index + 1
+        for i = 1, (number - 1) / 2 do
+            array[index] = -x*i;
+            array[index+1] = x*i;
+            index= index + 2
+        end
+    end
+
+    return array
+end
 
 function BulletManager:spawnBullet(shipX , shipY, angle)
     local bulletArr = self.bulletArr
