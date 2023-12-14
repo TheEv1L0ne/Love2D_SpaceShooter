@@ -156,12 +156,19 @@ function BulletManager:fly(dt)
             local bullet = self.bulletArr[i]
             bullet:update(dt)
 
-            if bullet.position.y < 0 then
+            if self:checkIfBulletIsOutside(bullet) then
                 self:DestoryBullet(i)
             end
         end
     end
 end 
+
+function BulletManager:checkIfBulletIsOutside(bullet)
+    return (bullet.position.y < 0)  
+            or (bullet.position.y > Model.stage.stageHeight) 
+            or (bullet.position.x < 0)
+            or (bullet.position.x > Model.stage.stageWidth)
+end
 
 function BulletManager:DestoryBullet(bulletIndex)
     table.remove(self.bulletArr,bulletIndex)
