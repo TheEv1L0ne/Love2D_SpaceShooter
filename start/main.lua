@@ -155,9 +155,7 @@ end
 
 
 function love.draw()
-
     explosionManager:draw()
-
 
     if not isGameInit() then
         love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
