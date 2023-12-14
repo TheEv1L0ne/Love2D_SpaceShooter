@@ -55,6 +55,8 @@ Model.explosionParams = {
     assetName = "explosion"
 }
 
+
+-- ITEMS START
 Model.coinParams = {
     assetName = "coin"
 }
@@ -63,13 +65,22 @@ Model.healthParams = {
     assetName = "health"
 }
 
-Model.angleParams = {
+Model.fireAngleParams = {
     assetName = "fireAngles"
 }
 
 Model.fireRateParams = {
     assetName = "fireRate"
 }
+
+Model.shieldParams = {
+    assetName = "shield"
+}
+
+Model.magnetParams = {
+    assetName = "magnet"
+}
+-- ITEMS END
 
 Model.init = function()
     Model.stage = {
@@ -87,7 +98,9 @@ Model.init = function()
     Model.coinParams.asset = AssetsManager.sprites[Model.coinParams.assetName]
     Model.healthParams.asset = AssetsManager.sprites[Model.healthParams.assetName]
     Model.fireRateParams.asset = AssetsManager.sprites[Model.fireRateParams.assetName]
-    Model.angleParams.asset = AssetsManager.sprites[Model.angleParams.assetName]
+    Model.fireAngleParams.asset = AssetsManager.sprites[Model.fireAngleParams.assetName]
+    Model.shieldParams.asset = AssetsManager.sprites[Model.shieldParams.assetName]
+    Model.magnetParams.asset = AssetsManager.sprites[Model.magnetParams.assetName]
 
 end
 
