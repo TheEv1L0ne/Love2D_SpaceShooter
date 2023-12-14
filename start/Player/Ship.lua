@@ -18,8 +18,8 @@ function Ship:update(xDT, yDT)
     local x = self.position.x + (xDT * self.speed)
     local y = self.position.y + (yDT * self.speed)
 
-    self.position.x = Utils.clamp(x, 0, Model.stage.stageWidth)
-    self.position.y = Utils.clamp(y, 0, Model.stage.stageHeight)
+    self.position.x = Utils.clamp(x, self.w/2, Model.stage.stageWidth - self.w/2)
+    self.position.y = Utils.clamp(y, self.h/2, Model.stage.stageHeight - self.h/2)
 end
 
 function Ship:draw()
