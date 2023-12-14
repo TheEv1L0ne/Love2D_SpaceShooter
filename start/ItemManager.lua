@@ -78,19 +78,19 @@ function ItemManager:spawnItem(itemArray, itemClass, itemParams)
     local itemArr = itemArray
 
     local params = itemParams
-    local coinMinSpawnX = params.asset:getWidth() / 2
-    local coinMaxSPawnX = stageWidth - coinMinSpawnX
+    local itemMinSpawnX = params.asset:getWidth() / 2
+    local itemMaxSPawnX = stageWidth - itemMinSpawnX
 
-    local coinMinSpawnY = params.asset:getHeight() / 2
+    local coinMinSpawnY = params.asset:getHeight() / 2 + 50 -- +50 so it dosent spawn over top UI
     local coinMaxSPawnY = stageHeight - coinMinSpawnY
 
-    local x = Utils.clamp(math.random() * stageWidth, coinMinSpawnX, coinMaxSPawnX)
+    local x = Utils.clamp(math.random() * stageWidth, itemMinSpawnX, itemMaxSPawnX)
     local y = Utils.clamp(math.random() * stageHeight, coinMinSpawnY, coinMaxSPawnY)
 
-    local coin = itemClass
-    coin:setParams(params)
-    coin:createItem(Vector.new(x,y))
-    table.insert(itemArr, coin)
+    local item = itemClass
+    item:setParams(params)
+    item:createItem(Vector.new(x,y))
+    table.insert(itemArr, item)
 end
 
 function ItemManager:draw()
