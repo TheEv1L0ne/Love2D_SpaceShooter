@@ -91,9 +91,9 @@ function love.update(dt)
         return
     end
 
-    itemManager:update(dt)
-
     playerManager:update(dt)
+
+    itemManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y)
 
     stars:update(dt)
     
@@ -125,7 +125,7 @@ function love.update(dt)
             end
 
             if itemName == "magnet" then
-                -- empty?
+                itemManager:setItemPullTime()
             end
 
             if itemName == "shield" then

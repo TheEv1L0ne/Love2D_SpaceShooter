@@ -14,16 +14,23 @@ function ItemManager:init()
 
     itemSpawnCooldown = 1 --initial spawn cooldown
     itemCd = 2 --after then every x seconds
+
+    self.pullTimer = 0
 end
 
-function ItemManager:update(dt)
+function ItemManager:update(dt, playerX, playerY)
 
+    self:itemPullTime(dt)
     self:canSpawnItem(dt)
 
     for i=1, Utils.tablelength(self.itemCoinArr) do
         if self.itemCoinArr[i] ~= nil then
             local item = self.itemCoinArr[i]
             item:update(dt)
+
+            if self.pullTimer > 0 then
+                item:moveTo(Vector.new(playerX, playerY), dt)
+            end
 
             if ((love.timer.getTime() - item.timeCreated) > 3) then
                 self:removeItem(i)
@@ -58,7 +65,7 @@ function ItemManager:chooseNextItemToSpawn()
     elseif (random > 60) and (random <= 75) then
         params = Model.shieldParams
     else
-        params = Model.coinParams
+        params = Model.magnetParams
     end
 
     return params
@@ -105,6 +112,18 @@ end
 
 function ItemManager:removeItem(ItemIndex)
     table.remove(self.itemCoinArr,ItemIndex)
+end
+
+function ItemManager:itemPullTime(dt)
+    if self.pullTimer > 0 then
+        self.pullTimer = self.pullTimer - dt
+    else
+        self.pullTimer = 0
+    end
+end
+
+function ItemManager:setItemPullTime()
+    self.pullTimer = 5
 end
 
 return ItemManager

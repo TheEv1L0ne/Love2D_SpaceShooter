@@ -13,7 +13,7 @@ function Item:init()
     self.timeCreated = 0
 
     self.fadeTween = nil
-    self.properties = nil
+    self.fadeProperties = nil
 end
 
 function Item:setParams(params)
@@ -26,8 +26,31 @@ end
 function Item:update(dt)
     self.fadeTween:update(dt)
 
-    --not the best solution but at least it works! xD
-    self.ItemAlpha = self.properties.ItemAlpha
+    -- not most beautiful solution but at least works...
+    self.ItemAlpha = self.fadeProperties.ItemAlpha
+end
+
+-- simple function to move item object
+function Item:moveTo(destination, t)
+
+    local xMove = math.abs(self.position.x - destination.x) * t
+    local yMove = math.abs(self.position.y - destination.y) * t
+
+    if self.position.x < destination.x then 						
+        self.position.x = self.position.x + xMove			
+    end
+     
+    if self.position.x > destination.x then 						
+        self.position.x = self.position.x - xMove		
+    end
+     
+    if self.position.y < destination.y then 						
+        self.position.y = self.position.y + yMove	
+    end
+     
+    if self.position.y > destination.y then 						
+        self.position.y = self.position.y - yMove	
+    end
 end
 
 function Item:createItem(position)
@@ -35,8 +58,8 @@ function Item:createItem(position)
     self.timeCreated = love.timer.getTime()
     self.position = Vector.new(position.x, position.y)
 
-    self.properties = {ItemAlpha = 0}
-    self.fadeTween = tween.new(0.3, self.properties, {ItemAlpha = 1}, 'linear')
+    self.fadeProperties = {ItemAlpha = 0}
+    self.fadeTween = tween.new(0.3, self.fadeProperties, {ItemAlpha = 1}, 'linear')
 end
 
 function Item:draw()
