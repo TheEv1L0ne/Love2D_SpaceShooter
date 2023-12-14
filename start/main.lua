@@ -129,7 +129,7 @@ function love.update(dt)
             end
 
             if itemName == "shield" then
-                -- empty?
+                playerManager:setShieldActiveTime()
             end
 
             itemManager:removeItem(itemColidedIndex)

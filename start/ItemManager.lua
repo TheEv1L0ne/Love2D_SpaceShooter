@@ -65,7 +65,7 @@ function ItemManager:chooseNextItemToSpawn()
     elseif (random > 60) and (random <= 75) then
         params = Model.shieldParams
     else
-        params = Model.magnetParams
+        params = Model.coinParams
     end
 
     return params
