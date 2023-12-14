@@ -21,14 +21,10 @@ function BulletManager:update(dt, shipX , shipY)
 
     if fireCooldown <= 0 then
         if fire then
-            local bulletArr = self.bulletArr
-
-            local params = Model.bulletParams
-            params.x = shipX
-            params.y = shipY
-
-            local bullet = BulletCls.new(params)
-            table.insert(bulletArr, bullet)
+            self:spawnBullet(shipX -10, shipY, 0)
+            self:spawnBullet(shipX + 10, shipY, 0)
+            self:spawnBullet(shipX , shipY, -1)
+            self:spawnBullet(shipX , shipY, 1)
 
             fireCooldown = self.fireRate
         end
@@ -37,6 +33,19 @@ function BulletManager:update(dt, shipX , shipY)
     end
 
     self:fly(dt)
+end
+
+
+function BulletManager:spawnBullet(shipX , shipY, angle)
+    local bulletArr = self.bulletArr
+
+    local params = Model.bulletParams
+    params.x = shipX
+    params.y = shipY
+
+    local bullet = BulletCls.new(params)
+    bullet.angle = angle
+    table.insert(bulletArr, bullet)
 end
 
 function BulletManager:draw()

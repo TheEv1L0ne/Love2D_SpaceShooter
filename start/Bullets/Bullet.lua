@@ -10,6 +10,8 @@ function Bullet:init(params)
     self.h = self.asset:getHeight()
     
     self.position = Vector.new(params.x, params.y)
+
+    self.angle = 0
 end
 
 function Bullet:draw()
@@ -18,6 +20,7 @@ function Bullet:draw()
 end
 
 function Bullet:update(dt)
+    self.position.x = self.position.x - (self.speed * dt) * self.angle
     self.position.y = self.position.y - (self.speed * dt)
 end 
 
