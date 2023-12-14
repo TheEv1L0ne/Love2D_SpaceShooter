@@ -63,6 +63,14 @@ Model.healthParams = {
     assetName = "health"
 }
 
+Model.angleParams = {
+    assetName = "fireAngles"
+}
+
+Model.fireRateParams = {
+    assetName = "fireRate"
+}
+
 Model.init = function()
     Model.stage = {
         stageHeight = love.graphics.getHeight(),
@@ -78,6 +86,8 @@ Model.init = function()
     Model.explosionParams.asset = AssetsManager.sprites[Model.explosionParams.assetName]
     Model.coinParams.asset = AssetsManager.sprites[Model.coinParams.assetName]
     Model.healthParams.asset = AssetsManager.sprites[Model.healthParams.assetName]
+    Model.fireRateParams.asset = AssetsManager.sprites[Model.fireRateParams.assetName]
+    Model.angleParams.asset = AssetsManager.sprites[Model.angleParams.assetName]
 
 end
 
