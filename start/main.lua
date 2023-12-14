@@ -113,6 +113,7 @@ function love.draw()
     end
 
     love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
+    love.graphics.print("Enemies left: "..tostring(enemySpawnManager.enemiesLeftToSpawn), Model.stage.stageWidth/2 - 20, 0)
 
     stars:draw()
     playerManager:draw()
@@ -184,6 +185,9 @@ function checkPlayerAndEnemyCollision()
 
             if playerManager.currentHp <= 0 then
                 resetGame()
+
+                -- reset score cause we are strating from all over
+                score = 0
             end
         end
     end
