@@ -14,6 +14,11 @@ function BulletManager:init(params)
     self.bulletArr = bulletArr
 
     fireCooldown = 0
+
+    self.moreCannonsTime = 0
+    self.moreAnglesTime = 0
+    self.numberOfCannons = 1
+    self.numberOfAngles = 1
 end
 
 function BulletManager:update(dt, shipX , shipY)
@@ -22,8 +27,8 @@ function BulletManager:update(dt, shipX , shipY)
     if fireCooldown <= 0 then
         if fire then
 
-            local r = self:GunAngles(1)
-            local n = self:numberOfGuns(1)
+            local r = self:GunAngles(self.numberOfAngles) -- calculates angles besed on how many we want to have
+            local n = self:numberOfGuns(self.numberOfCannons) -- calculates guns offsets besed on how many we want to have
             for i = 1, table.getn(r) do
                 for j = 1, table.getn(n) do
                     self:spawnBullet(shipX + n[j], shipY, r[i])
@@ -38,9 +43,44 @@ function BulletManager:update(dt, shipX , shipY)
     end
 
     self:fly(dt)
+    self:getGunsRemaindingTime(dt)
+    self:getAnglesRemaindingTime(dt)
+end
+
+function BulletManager:getGunsRemaindingTime(dt)
+    if self.moreCannonsTime > 0 then
+        self.moreCannonsTime = self.moreCannonsTime - dt
+    else
+        self.moreCannonsTime = 0
+        self.numberOfCannons = 1
+    end
+end
+
+function BulletManager:setGunsRemaindingTime()
+    self.moreCannonsTime = 5
+    self.numberOfCannons = 2
+end
+
+function BulletManager:getAnglesRemaindingTime(dt)
+    if self.moreAnglesTime > 0 then
+        self.moreAnglesTime = self.moreAnglesTime - dt
+    else
+        self.moreAnglesTime = 0
+        self.numberOfAngles = 1
+    end
+end
+
+function BulletManager:setAnglesRemaindingTime()
+    self.moreAnglesTime = 5
+    self.numberOfAngles = 3
 end
 
 function BulletManager:numberOfGuns(number)
+
+    if number < 1 then
+        number = 1
+    end
+    
     local index = 1
     local array = {}
     if math.fmod(number, 2) == 0 then
@@ -63,6 +103,11 @@ function BulletManager:numberOfGuns(number)
 end
 
 function BulletManager:GunAngles(number)
+
+    if number < 1 then
+        number = 1
+    end
+
     local index = 1
     local array = {}
 

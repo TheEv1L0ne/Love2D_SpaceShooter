@@ -117,11 +117,11 @@ function love.update(dt)
             end
 
             if itemName == "fireAngles" then
-                -- empty?
+                bulletManager:setAnglesRemaindingTime()
             end
 
             if itemName == "fireRate" then
-                -- empty?
+                bulletManager:setGunsRemaindingTime()
             end
 
             if itemName == "magnet" then
