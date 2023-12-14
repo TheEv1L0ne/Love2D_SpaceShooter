@@ -48,8 +48,7 @@ function love.load()
     print("love.load")
     AssetsManager.init()
     Model.init()
-    explosionManager = ExplosionManagerCls.new()
-
+    
     score = 0
 end
 
@@ -60,6 +59,7 @@ function initGame()
     enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
     itemManager = ItemManagerCls.new()
     collision = CollisionCls.new()
+    explosionManager = ExplosionManagerCls.new()
 end
 
 function isGameInit()
@@ -69,6 +69,7 @@ function isGameInit()
     and collision  ~= nil
     and stars  ~= nil
     and itemManager  ~= nil
+    and explosionManager ~= nil
 end
 
 function resetGame()
@@ -78,23 +79,17 @@ function resetGame()
     collision  = nil
     stars  = nil
     itemManager = nil
+    explosionManager = nil
 end
 
 function love.update(dt)
-
-
-    explosionManager:update(dt)
-
-
    -- print("update")
     if not isGameInit() then
         return
     end
 
     playerManager:update(dt)
-
     itemManager:update(dt, playerManager.ship.position.x, playerManager.ship.position.y)
-
     stars:update(dt)
     
     if playerManager.ship ~= nil then
@@ -102,7 +97,32 @@ function love.update(dt)
     end
 
     enemySpawnManager:update(dt)
+    explosionManager:update(dt)
+    
+    checkItemCollected()
+    checkBulletAndEnemyCollision()
+    checkPlayerAndEnemyCollision()
+    checkEnemiesLeft()
 
+end
+
+function love.draw()
+    if not isGameInit() then
+        love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
+        return
+    end
+
+    love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
+
+    stars:draw()
+    playerManager:draw()
+    bulletManager:draw()
+    enemySpawnManager:draw()
+    itemManager:draw()
+    explosionManager:draw()
+end
+
+function checkItemCollected()
     if (itemManager.itemCoinArr ~= nil) then
         local itemColidedIndex = collision:checkCollision(playerManager.ship, itemManager.itemCoinArr)
         if itemColidedIndex ~= -1 then
@@ -135,7 +155,9 @@ function love.update(dt)
             itemManager:removeItem(itemColidedIndex)
         end
     end
+end
 
+function checkBulletAndEnemyCollision()
     if (enemySpawnManager.enemyArr ~= nil) and (bulletManager.bulletArr ~= nil)then
         for i = 1, Utils.tablelength(bulletManager.bulletArr) do
             local enemyColidedIndex = collision:checkCollision(bulletManager.bulletArr[i], enemySpawnManager.enemyArr)
@@ -151,7 +173,9 @@ function love.update(dt)
             end
         end
     end
+end
 
+function checkPlayerAndEnemyCollision()
     if (enemySpawnManager.enemyArr ~= nil) then
         local enemyColidedIndex = collision:checkCollision(playerManager.ship, enemySpawnManager.enemyArr)
         if enemyColidedIndex ~= -1 then
@@ -163,29 +187,17 @@ function love.update(dt)
             end
         end
     end
+end
+
+
+function checkEnemiesLeft()
+    if enemySpawnManager == nil then
+        return
+    end
 
     if (enemySpawnManager.enemiesLeftToSpawn == 0) and (Utils.tablelength(enemySpawnManager.enemyArr) == 0) then
         resetGame()
     end
-end
-
-
-function love.draw()
-    explosionManager:draw()
-
-    if not isGameInit() then
-        love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
-        return
-    end
-
-    love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
-
-    --love.graphics.draw(AssetsManager.sprites.fireAngles, 0,0 )
-    stars:draw()
-    playerManager:draw()
-    bulletManager:draw()
-    enemySpawnManager:draw()
-    itemManager:draw()
 end
 
 
