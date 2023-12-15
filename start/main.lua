@@ -141,25 +141,15 @@ end
 function doItemEffect(itemName)
     if itemName == Model.coinParams.assetName then
         score = score + 33
-    end
-
-    if itemName == Model.healthParams.assetName then
+    elseif itemName == Model.healthParams.assetName then
         playerManager:increaseHealth()
-    end
-
-    if itemName == Model.fireAngleParams.assetName then
+    elseif itemName == Model.fireAngleParams.assetName then
         bulletManager:setAnglesRemaindingTime()
-    end
-
-    if itemName == Model.fireRateParams.assetName then
+    elseif itemName == Model.fireRateParams.assetName then
         bulletManager:setGunsRemaindingTime()
-    end
-
-    if itemName == Model.magnetParams.assetName then
+    elseif itemName == Model.magnetParams.assetName then
         itemManager:setItemPullTime()
-    end
-
-    if itemName == Model.shieldParams.assetName then
+    elseif itemName == Model.shieldParams.assetName then
         playerManager:setShieldActiveTime()
     end
 end
