@@ -9,7 +9,7 @@ function EnemySpawnManager:init(params)
     print("EnemySpawnManager init!")
     local enemyArr = {}
     self.enemyArr = enemyArr
-    self.enemiesLeftToSpawn = params.totalEnemies
+    self.enemiesLeftToSpawn = params.totalEnemies * level --global level defined in main.lua
 
     enemySpawnCooldown = 0
     enemyCd = 1

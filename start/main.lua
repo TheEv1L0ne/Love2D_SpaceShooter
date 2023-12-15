@@ -43,7 +43,7 @@ local SPACE_KEY = "space"
 
 local score = 0
 local winFail = ""
-local level = 1
+level = 1
 
 
 function love.load()
@@ -51,14 +51,15 @@ function love.load()
     AssetsManager.init()
     Model.init()
     
+    level = 1
     score = 0
 end
 
 function initGame()
-    stars = StarsCls.new( Model.starsParams)
-    playerManager = PlayerManagerCls.new( Model.playerParams )
-    bulletManager = BulletManagerCls.new( Model.bulletManagerParams )
-    enemySpawnManager = EnemySpawnCls.new( Model.enemySpawnParams )
+    stars = StarsCls.new(Model.starsParams)
+    playerManager = PlayerManagerCls.new(Model.playerParams)
+    bulletManager = BulletManagerCls.new(Model.bulletManagerParams)
+    enemySpawnManager = EnemySpawnCls.new(Model.enemySpawnParams, level)
     itemManager = ItemManagerCls.new()
     collision = CollisionCls.new()
     explosionManager = ExplosionManagerCls.new()
@@ -115,7 +116,7 @@ function love.draw()
     end
 
     gameScoreAndProgress()
-    
+
     stars:draw()
     playerManager:draw()
     bulletManager:draw()

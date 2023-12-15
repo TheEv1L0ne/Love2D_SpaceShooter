@@ -47,7 +47,7 @@ Model.enemyParams = {
 }
 
 Model.enemySpawnParams = {
-    totalEnemies = 50
+    totalEnemies = 20
 }
 
 Model.explosionParams = {
