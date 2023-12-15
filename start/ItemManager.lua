@@ -123,7 +123,7 @@ function ItemManager:itemPullTime(dt)
 end
 
 function ItemManager:setItemPullTime()
-    self.pullTimer = 5
+    self.pullTimer = Model.magnetParams.duration
 end
 
 return ItemManager

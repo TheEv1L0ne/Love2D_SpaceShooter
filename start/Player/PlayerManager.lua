@@ -86,9 +86,9 @@ function PlayerManager:takeDamage()
 end
 
 function PlayerManager:increaseHealth()
-    self.currentHp = self.currentHp + 1
-    if self.currentHp > 3 then
-        self.currentHp = 3
+    self.currentHp = self.currentHp + Model.healthParams.amount
+    if self.currentHp > Model.playerParams.maxHp then
+        self.currentHp = Model.playerParams.maxHp
     end
 end
 
@@ -101,7 +101,7 @@ function PlayerManager:shieldActiveTime(dt)
 end
 
 function PlayerManager:setShieldActiveTime()
-    self.shieldTimer = 5
+    self.shieldTimer = Model.shieldParams.duration
 end
 
 return PlayerManager

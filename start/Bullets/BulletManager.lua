@@ -17,8 +17,8 @@ function BulletManager:init(params)
 
     self.moreCannonsTime = 0
     self.moreAnglesTime = 0
-    self.numberOfCannons = 1
-    self.numberOfAngles = 1
+    self.numberOfCannons = params.defaultCannons
+    self.numberOfAngles = params.defaultAngles
 end
 
 function BulletManager:update(dt, shipX , shipY)
@@ -52,13 +52,13 @@ function BulletManager:getGunsRemaindingTime(dt)
         self.moreCannonsTime = self.moreCannonsTime - dt
     else
         self.moreCannonsTime = 0
-        self.numberOfCannons = 1
+        self.numberOfCannons = Model.shipParams.defaultCannons
     end
 end
 
 function BulletManager:setGunsRemaindingTime()
-    self.moreCannonsTime = 5
-    self.numberOfCannons = 2
+    self.moreCannonsTime = Model.fireRateParams.duration
+    self.numberOfCannons = Model.fireRateParams.amount
 end
 
 function BulletManager:getAnglesRemaindingTime(dt)
@@ -66,13 +66,13 @@ function BulletManager:getAnglesRemaindingTime(dt)
         self.moreAnglesTime = self.moreAnglesTime - dt
     else
         self.moreAnglesTime = 0
-        self.numberOfAngles = 1
+        self.numberOfAngles = Model.shipParams.defaultAngles
     end
 end
 
 function BulletManager:setAnglesRemaindingTime()
-    self.moreAnglesTime = 5
-    self.numberOfAngles = 3
+    self.moreAnglesTime = Model.fireAngleParams.duration
+    self.numberOfAngles = Model.fireAngleParams.amount
 end
 
 function BulletManager:numberOfGuns(number)

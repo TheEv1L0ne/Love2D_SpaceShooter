@@ -4,7 +4,8 @@ local Vector = require("Vector")
 
 function Enemy:init(params)
     print("Enemy init!")
-    self.speed = params.speed
+    --Give enemy random speed up to 1.5 of default
+    self.speed = math.floor(math.random() * params.speed /2) + params.speed
     self.asset = params.asset
     self.w = self.asset:getWidth()
     self.h = self.asset:getHeight()

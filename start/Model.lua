@@ -14,7 +14,9 @@ local Model = {
 
 Model.shipParams = {
     assetName = "ship",
-    speed = 500
+    speed = 500,
+    defaultCannons = 1,
+    defaultAngles = 1
 }
 
 Model.playerParams = {
@@ -43,7 +45,8 @@ Model.bulletManagerParams =
 
 Model.enemyParams = {
     assetName = "enemy",
-    speed = 500
+    speed = 500,
+    baseScore = 100
 }
 
 Model.enemySpawnParams = {
@@ -57,27 +60,35 @@ Model.explosionParams = {
 
 -- ITEMS START
 Model.coinParams = {
-    assetName = "coin"
+    assetName = "coin",
+    amount = 20
 }
 
 Model.healthParams = {
-    assetName = "health"
+    assetName = "health",
+    amount = 1
 }
 
 Model.fireAngleParams = {
-    assetName = "fireAngles"
+    assetName = "fireAngles",
+    duration = 5,
+    amount = 3
 }
 
 Model.fireRateParams = {
-    assetName = "fireRate"
+    assetName = "fireRate",
+    duration = 5,
+    amount = 2,
 }
 
 Model.shieldParams = {
-    assetName = "shield"
+    assetName = "shield",
+    duration = 5
 }
 
 Model.magnetParams = {
-    assetName = "magnet"
+    assetName = "magnet",
+    duration = 5
 }
 -- ITEMS END
 

@@ -140,7 +140,7 @@ end
 
 function doItemEffect(itemName)
     if itemName == Model.coinParams.assetName then
-        score = score + 33
+        score = score + math.floor(math.random() * Model.coinParams.amount) + Model.coinParams.amount
     elseif itemName == Model.healthParams.assetName then
         playerManager:increaseHealth()
     elseif itemName == Model.fireAngleParams.assetName then
@@ -165,8 +165,8 @@ function checkBulletAndEnemyCollision()
                 bulletManager:DestoryBullet(i);
                 enemySpawnManager:DestoryEnemy(enemyColidedIndex)
 
-                --Increase score by 100 when enemy is destoryed
-                score = score + 100
+                --Increase score by X when enemy is destoryed
+                score = score + math.floor(math.random() * Model.enemyParams.baseScore) + Model.enemyParams.baseScore
             end
         end
     end
