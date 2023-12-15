@@ -1,6 +1,6 @@
 local Enemy = classes.class()
-local Utils = require("Utils")
-local Vector = require("Vector")
+local Utils = require("Helpers/Utils")
+local Vector = require("Helpers/Vector")
 
 function Enemy:init(params)
     print("Enemy init!")

@@ -1,8 +1,8 @@
 local classes = require("classes")
 local ExplosionManager = classes.class()
 local Model = require("Model")
-local Utils = require("Utils")
-local ExplosionCls = require("Explosion")
+local Utils = require("Helpers/Utils")
+local ExplosionCls = require("Explosion/Explosion")
 
 function ExplosionManager:init()
     print("ExplosionManager init!")

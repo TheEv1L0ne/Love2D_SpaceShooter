@@ -1,7 +1,7 @@
 local EnemySpawnManager = classes.class()
 local Model = require("Model")
-local Utils = require("Utils")
-local Vector = require("Vector")
+local Utils = require("Helpers/Utils")
+local Vector = require("Helpers/Vector")
 
 local EnemyCls = require("Enemies/Enemy")
 

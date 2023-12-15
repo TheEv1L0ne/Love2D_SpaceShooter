@@ -1,6 +1,6 @@
 local Bullet = classes.class()
-local Utils = require("Utils")
-local Vector = require("Vector")
+local Utils = require("Helpers/Utils")
+local Vector = require("Helpers/Vector")
 
 function Bullet:init(params)
     print("Bullet init!")

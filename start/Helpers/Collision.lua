@@ -1,6 +1,6 @@
 local classes = require("classes")
 local Collision = classes.class()
-local Utils = require("Utils")
+local Utils = require("Helpers/Utils")
 
 function Collision:checkCollision(x, y)
     -- we check if rects overlap

@@ -1,10 +1,10 @@
 local classes = require("classes")
 local ItemManager = classes.class()
 local Model = require("Model")
-local Utils = require("Utils")
-local ItemCls = require("Item")
+local ItemCls = require("Items/Item")
 
-local Vector = require("Vector")
+local Vector = require("Helpers/Vector")
+local Utils = require("Helpers/Utils")
 
 function ItemManager:init()
     print("ItemManager init!")

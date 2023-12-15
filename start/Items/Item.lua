@@ -1,9 +1,9 @@
 local classes = require("classes")
 local Item = classes.class()
 local Model = require("Model")
-local Utils = require("Utils")
-local Vector = require("Vector")
-local tween = require("tween")
+local Utils = require("Helpers/Utils")
+local Vector = require("Helpers/Vector")
+local tween = require("Helpers/tween")
 
 function Item:init()
     print("Item init!")

@@ -1,5 +1,5 @@
 local Utils = classes.class()
-local Vector = require("Vector")
+local Vector = require("Helpers/Vector")
 
 function Utils.screenCoordinates(x,y,w,h)
     local newX = x - (w/2)

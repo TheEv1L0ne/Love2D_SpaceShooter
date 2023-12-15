@@ -19,20 +19,20 @@ local bulletManager = nil
 local EnemySpawnCls = require("Enemies/EnemySpawnManager")
 local enemySpawnManager = nil
 
-local CollisionCls = require("Collision")
+local CollisionCls = require("Helpers/Collision")
 local collision = nil
 
-local ExplosionManagerCls = require("ExplosionManager")
+local ExplosionManagerCls = require("Explosion/ExplosionManager")
 local explosionManager = nil
 
-local ItemManagerCls = require("ItemManager")
+local ItemManagerCls = require("Items/ItemManager")
 local itemManager = nil
 
 local AssetsManager = require("AssetsManager")
 local Model = require("Model")
 
-local Vector = require("Vector")
-local Utils = require("Utils")
+local Vector = require("Helpers/Vector")
+local Utils = require("Helpers/Utils")
 
 local LEFT_KEY = "left"
 local RIGHT_KEY = "right"
