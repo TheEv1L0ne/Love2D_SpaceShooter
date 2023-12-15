@@ -33,8 +33,17 @@ end
 -- simple function to move item object
 function Item:moveTo(destination, t)
 
-    local xMove = math.abs(self.position.x - destination.x) * t * 2
-    local yMove = math.abs(self.position.y - destination.y) * t * 2
+    local xDistance = math.abs(self.position.x - destination.x) 
+    local yDistance = math.abs(self.position.y - destination.y)
+
+    local xMove = t * 400
+    local yMove = t * 400
+
+    if xDistance > yDistance then
+        yMove = xMove/xDistance * yDistance
+    else
+        xMove = yMove/yDistance * xDistance
+    end
 
     if self.position.x < destination.x then 						
         self.position.x = self.position.x + xMove			
