@@ -131,32 +131,36 @@ function checkItemCollected()
         if itemColidedIndex ~= -1 then
             local itemName = itemManager.itemCoinArr[itemColidedIndex].itemName
 
-            if itemName == "coin" then
-                score = score + 33
-            end
-
-            if itemName == "health" then
-                playerManager:increaseHealth()
-            end
-
-            if itemName == "fireAngles" then
-                bulletManager:setAnglesRemaindingTime()
-            end
-
-            if itemName == "fireRate" then
-                bulletManager:setGunsRemaindingTime()
-            end
-
-            if itemName == "magnet" then
-                itemManager:setItemPullTime()
-            end
-
-            if itemName == "shield" then
-                playerManager:setShieldActiveTime()
-            end
+            doItemEffect(itemName)
 
             itemManager:removeItem(itemColidedIndex)
         end
+    end
+end
+
+function doItemEffect(itemName)
+    if itemName == Model.coinParams.assetName then
+        score = score + 33
+    end
+
+    if itemName == Model.healthParams.assetName then
+        playerManager:increaseHealth()
+    end
+
+    if itemName == Model.fireAngleParams.assetName then
+        bulletManager:setAnglesRemaindingTime()
+    end
+
+    if itemName == Model.fireRateParams.assetName then
+        bulletManager:setGunsRemaindingTime()
+    end
+
+    if itemName == Model.magnetParams.assetName then
+        itemManager:setItemPullTime()
+    end
+
+    if itemName == Model.shieldParams.assetName then
+        playerManager:setShieldActiveTime()
     end
 end
 
