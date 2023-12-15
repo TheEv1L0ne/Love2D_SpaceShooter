@@ -42,6 +42,8 @@ local DOWN_KEY = "down"
 local SPACE_KEY = "space"
 
 local score = 0
+local winFail = ""
+local level = 1
 
 
 function love.load()
@@ -108,13 +110,12 @@ end
 
 function love.draw()
     if not isGameInit() then
-        love.graphics.printf("Press S to start!!!", Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
+        endGameResults()
         return
     end
 
-    love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
-    love.graphics.print("Enemies left: "..tostring(enemySpawnManager.enemiesLeftToSpawn), Model.stage.stageWidth/2 - 20, 0)
-
+    gameScoreAndProgress()
+    
     stars:draw()
     playerManager:draw()
     bulletManager:draw()
@@ -180,14 +181,17 @@ function checkPlayerAndEnemyCollision()
     if (enemySpawnManager.enemyArr ~= nil) then
         local enemyColidedIndex = collision:checkCollision(playerManager.ship, enemySpawnManager.enemyArr)
         if enemyColidedIndex ~= -1 then
+            explosionManager:createExplosion(playerManager.ship.position)
             playerManager:takeDamage();
             enemySpawnManager:DestoryEnemy(enemyColidedIndex)
 
             if playerManager.currentHp <= 0 then
-                resetGame()
-
-                -- reset score cause we are strating from all over
+                -- player was destoryed so we failed... 
                 score = 0
+                level = 1
+                winFail = "FAILED"
+
+                resetGame()
             end
         end
     end
@@ -200,8 +204,41 @@ function checkEnemiesLeft()
     end
 
     if (enemySpawnManager.enemiesLeftToSpawn == 0) and (Utils.tablelength(enemySpawnManager.enemyArr) == 0) then
+        -- No enemies left so we won the game
+        level = level + 1
+        winFail = "WON"
+
         resetGame()
     end
+end
+
+function gameScoreAndProgress()
+    love.graphics.print("Score: "..tostring(score), Model.stage.stageWidth - 100, 0)
+    love.graphics.print("Enemies left: "..tostring(enemySpawnManager.enemiesLeftToSpawn), Model.stage.stageWidth/2 - 20, 0)
+end
+
+function endGameResults()
+    local resultString = "You have [WON/FAILED] level [X]!"
+
+    -- do not show this when game is started...
+    if winFail == "" then
+        resultString = ""
+    else
+        local lastLevelPlayed = level - 1
+        if lastLevelPlayed < 1 then
+            lastLevelPlayed = 1
+        end
+
+        resultString = resultString:gsub("%[WON/FAILED%]", winFail)
+        resultString = resultString:gsub("%[X%]", lastLevelPlayed)
+    end
+    -- will not show at start cause resultString = ""
+    love.graphics.printf(resultString, Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 150, 200, "center")
+
+    local startString = "Press S to start level [X] !!!"
+    startString = startString:gsub("%[X%]", level)
+
+    love.graphics.printf(startString, Model.stage.stageWidth/2 - 100, Model.stage.stageHeight/2 - 100, 200, "center")
 end
 
 
